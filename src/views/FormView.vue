@@ -1,0 +1,106 @@
+<script setup lang="ts">
+import TInputBox from '@/components/ui/TInputBox.vue';
+import TSubmit from '@/components/ui/TSubmit.vue';
+import TButtonAdd from '@/components/ui/TButtonAdd.vue';
+import { useChildrenStore } from '@/stores/children';
+import { useUserStore } from '@/stores/user';
+import { onMounted, ref } from 'vue';
+import { Person } from '@/types/person';
+
+const userStore = useUserStore();
+const childrenStore = useChildrenStore();
+
+const user = ref<Person>(new Person);
+const children = ref<Person[]>([new Person]);
+
+const initChildren = () => {
+  childrenStore.children.map((child) => {
+    children.value.push(child);
+  })
+}
+onMounted(() => initChildren());
+
+const addChildTemplate = () => {
+  children.value.push(new Person);
+}
+const removeChildTemplate = (index: number) => {
+  children.value.splice(index, 1);
+}
+const updateChildren = () => {
+  children.value.forEach((newChild) => {
+    if (!childrenStore.children.includes(newChild)
+      && !Object.values(newChild).every(e => e?.toString() === '')) {
+      childrenStore.children.push(newChild);
+    }
+  });
+  console.log(children)
+
+}
+
+const submitForm = () => {
+  updateChildren();
+  userStore.updateData(user.value);
+}
+</script>
+
+<template>
+  <main class="my-[30px]">
+    <form action="#" class="w-[616px] mx-auto flex flex-col">
+      <div class="flex flex-col gap-5">
+        <h1 class="text-base font-medium">Персональные данные</h1>
+        <ul class="flex flex-col gap-2.5">
+          <li>
+            <TInputBox v-model="user.name" :placeholder="'Имя'" />
+          </li>
+          <li>
+            <TInputBox v-model="user.age" :type="'number'" :placeholder="'Возраст'" />
+          </li>
+        </ul>
+      </div>
+      <div class="relative mt-11 flex flex-col gap-5">
+        <h2 class="text-base font-medium">Дети (макс. 5)</h2>
+        <ul class="flex flex-col gap-2.5">
+          <li v-for="(child, index) in children" :key="index">
+            <div class="flex gap-[18px]">
+              <TInputBox v-model="child.name" :placeholder="'Имя'" />
+              <TInputBox v-model="child.age" :placeholder="'Возраст'" />
+              <div class="my-auto">
+                <button class="text-primary text-main h-6" @click.prevent="removeChildTemplate(index)">
+                  Удалить
+                </button>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <TButtonAdd class="absolute right-0 -top-[11px]" @click.prevent="addChildTemplate">
+          Добавить ребенка
+        </TButtonAdd>
+      </div>
+      <TSubmit class="mt-[30px]" @click.prevent="submitForm" />
+    </form>
+  </main>
+</template>
+
+/* Удалить */
+
+width: 60px;
+height: 24px;
+
+/* 16 Paragraph 2 */
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 24px;
+/* identical to box height, or 171% */
+display: flex;
+align-items: center;
+
+/* Colors / Primary */
+color: #01A7FD;
+
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+flex-grow: 0;
