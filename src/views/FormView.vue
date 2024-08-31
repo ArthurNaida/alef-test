@@ -70,7 +70,7 @@ const submitForm = () => {
           <li v-for="(child, index) in children" :key="index">
             <div class="flex flex-col md:flex-row gap-[18px]">
               <TInputBox v-model="child.name" :placeholder="'Имя'" />
-              <TInputBox v-model="child.age" :placeholder="'Возраст'" />
+              <TInputBox v-model="child.age" :type="'number'" :placeholder="'Возраст'" />
               <div class="md:my-auto">
                 <button class="text-primary text-main h-6" @click.prevent="removeChildTemplate(index)">
                   Удалить
