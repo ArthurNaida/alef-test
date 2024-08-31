@@ -32,10 +32,15 @@ const updateChildren = () => {
   });
 }
 
+const saveLabelMessage = ref<string>('');
+
 const submitForm = () => {
   if (!isEmptyField(user.value)) {
+    saveLabelMessage.value = 'Данные сохранены!';
     updateChildren();
     userStore.updateData(user.value);
+  } else {
+    saveLabelMessage.value = 'Не удалось сохранить данные. Заполните все требуемые поля.'
   }
 }
 </script>
@@ -75,7 +80,7 @@ const submitForm = () => {
           </li>
         </ul>
       </div>
-      <TSubmit class="mt-[30px]" @click.prevent="submitForm" />
+      <TSubmit class="mt-[30px]" @click.prevent="submitForm" :label-message="saveLabelMessage" />
     </form>
   </main>
 </template>

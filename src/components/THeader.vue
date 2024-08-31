@@ -11,7 +11,7 @@ const toggleSidebar = () => (isSidebarVisible.value = !isSidebarVisible.value);
 
 <template>
     <header class="sticky h-[--header-height] flex items-center shadow-header-bottom">
-        <img src="@/assets/logo.svg" alt="Логотип" class="ml-[51px]">
+        <img src="@/assets/logo.svg" alt="Логотип" class="sm:ml-[51px]">
         <nav class="hidden absolute left-1/2 -translate-x-1/2 md:flex gap-6">
             <template v-for="(route, index) in routes" :key="index">
                 <router-link :to="route.path" activeClass="!text-black-main" class="text-gray-main"
