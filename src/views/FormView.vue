@@ -4,7 +4,7 @@ import TSubmit from '@/components/ui/TSubmit.vue';
 import TButtonAdd from '@/components/ui/TButtonAdd.vue';
 import { useChildrenStore } from '@/stores/children';
 import { useUserStore } from '@/stores/user';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import { Person } from '@/types/person';
 
 const userStore = useUserStore();
@@ -42,7 +42,7 @@ const submitForm = () => {
 
 <template>
   <main class="my-[30px]">
-    <form action="#" class="w-[616px] mx-auto flex flex-col">
+    <form action="#" class="w-[320px] sm:w-[440px] md:w-[616px] mx-auto flex flex-col">
       <div class="flex flex-col gap-5">
         <h1 class="text-base font-medium">Персональные данные</h1>
         <ul class="flex flex-col gap-2.5">
@@ -56,12 +56,16 @@ const submitForm = () => {
       </div>
       <div class="relative mt-11 flex flex-col gap-5">
         <h2 class="text-base font-medium">Дети (макс. 5)</h2>
-        <ul class="flex flex-col gap-2.5">
+        <TButtonAdd class="sm:absolute sm:right-0 sm:-top-[11px]" v-if="children.length < 5"
+          @click.prevent="addChildTemplate">
+          Добавить ребенка
+        </TButtonAdd>
+        <ul class="flex flex-col md:gap-2.5 gap-10">
           <li v-for="(child, index) in children" :key="index">
-            <div class="flex gap-[18px]">
+            <div class="flex flex-col md:flex-row gap-[18px]">
               <TInputBox v-model="child.name" :placeholder="'Имя'" />
               <TInputBox v-model="child.age" :placeholder="'Возраст'" />
-              <div class="my-auto">
+              <div class="md:my-auto">
                 <button class="text-primary text-main h-6" @click.prevent="removeChildTemplate(index)">
                   Удалить
                 </button>
@@ -69,35 +73,8 @@ const submitForm = () => {
             </div>
           </li>
         </ul>
-        <TButtonAdd class="absolute right-0 -top-[11px]" @click.prevent="addChildTemplate">
-          Добавить ребенка
-        </TButtonAdd>
       </div>
       <TSubmit class="mt-[30px]" @click.prevent="submitForm" />
     </form>
   </main>
 </template>
-
-/* Удалить */
-
-width: 60px;
-height: 24px;
-
-/* 16 Paragraph 2 */
-font-family: 'Montserrat';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 24px;
-/* identical to box height, or 171% */
-display: flex;
-align-items: center;
-
-/* Colors / Primary */
-color: #01A7FD;
-
-
-/* Inside auto layout */
-flex: none;
-order: 2;
-flex-grow: 0;

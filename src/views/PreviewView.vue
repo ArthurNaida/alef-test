@@ -9,7 +9,7 @@ const { children } = useChildrenStore();
 </script>
 
 <template>
-  <div class="text-main-large pl-[375px] py-[30px] flex flex-col gap-[60px]">
+  <div class="text-main-large pl-[15vw] sm:pl-[120px] md:pl-[220px] xl:pl-[375px] py-[30px] flex flex-col gap-[60px]">
     <div class="flex flex-col gap-5" v-if="user.name && user.age">
       <h1 class="font-medium">Персональные данные</h1>
       <h2 class="font-bold">{{ user.name }}, {{ user.age }} {{ ageLabel(user.age) }}</h2>
