@@ -18,7 +18,7 @@ export default {
       fontSize: {
         'placeholder': ['13px', '16px'],
         'main': ['14px', '24px'],
-        'main-large': ['16px', '24px']
+        'main-large': ['16px', '24pxp']
       }
     },
   },

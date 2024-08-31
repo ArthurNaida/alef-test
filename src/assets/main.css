@@ -5,6 +5,7 @@
 :root {
   --header-height: 76px;
   --black-main: '#111111';
+  --sidebar-width: 260px;
 }
 
 * {

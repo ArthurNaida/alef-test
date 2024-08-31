@@ -42,7 +42,7 @@ const submitForm = () => {
 
 <template>
   <main class="my-[30px]">
-    <form action="#" class="w-[320px] sm:w-[440px] md:w-[616px] mx-auto flex flex-col">
+    <form action="#" class="w-[300px] sm:w-[440px] md:w-[616px] mx-auto flex flex-col">
       <div class="flex flex-col gap-5">
         <h1 class="text-base font-medium">Персональные данные</h1>
         <ul class="flex flex-col gap-2.5">
@@ -54,12 +54,13 @@ const submitForm = () => {
           </li>
         </ul>
       </div>
-      <div class="relative mt-11 flex flex-col gap-5">
-        <h2 class="text-base font-medium">Дети (макс. 5)</h2>
-        <TButtonAdd class="sm:absolute sm:right-0 sm:-top-[11px]" v-if="children.length < 5"
-          @click.prevent="addChildTemplate">
-          Добавить ребенка
-        </TButtonAdd>
+      <div class="mt-11 flex flex-col gap-5">
+        <div class="flex flex-col md:flex-row gap-5 justify-between md:items-center">
+          <h2 class="text-base font-medium">Дети (макс. 5)</h2>
+          <TButtonAdd v-if="children.length < 5" @click.prevent="addChildTemplate">
+            Добавить ребенка
+          </TButtonAdd>
+        </div>
         <ul class="flex flex-col md:gap-2.5 gap-10">
           <li v-for="(child, index) in children" :key="index">
             <div class="flex flex-col md:flex-row gap-[18px]">
