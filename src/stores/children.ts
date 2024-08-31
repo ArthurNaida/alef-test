@@ -10,6 +10,9 @@ export const useChildrenStore = defineStore('children', {
     actions: {
         add(newChild: Person) {
             this.children.push(newChild);
+        },
+        clear() {
+            this.children = new Array;
         }
     }
 })

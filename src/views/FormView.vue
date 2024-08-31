@@ -4,21 +4,18 @@ import TSubmit from '@/components/ui/TSubmit.vue';
 import TButtonAdd from '@/components/ui/TButtonAdd.vue';
 import { useChildrenStore } from '@/stores/children';
 import { useUserStore } from '@/stores/user';
-import { onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { Person } from '@/types/person';
 
 const userStore = useUserStore();
 const childrenStore = useChildrenStore();
 
 const user = ref<Person>(new Person);
-const children = ref<Person[]>([new Person]);
+const children = ref<Person[]>([]);
 
-const initChildren = () => {
-  childrenStore.children.map((child) => {
-    children.value.push(child);
-  })
+const isEmptyField = (person: Person) => {
+  return !person.age || !person.name
 }
-onMounted(() => initChildren());
 
 const addChildTemplate = () => {
   children.value.push(new Person);
@@ -27,19 +24,19 @@ const removeChildTemplate = (index: number) => {
   children.value.splice(index, 1);
 }
 const updateChildren = () => {
+  childrenStore.clear();
   children.value.forEach((newChild) => {
-    if (!childrenStore.children.includes(newChild)
-      && !Object.values(newChild).every(e => e?.toString() === '')) {
-      childrenStore.children.push(newChild);
+    if (!isEmptyField(newChild)) {
+      childrenStore.add(newChild);
     }
   });
-  console.log(children)
-
 }
 
 const submitForm = () => {
-  updateChildren();
-  userStore.updateData(user.value);
+  if (!isEmptyField(user.value)) {
+    updateChildren();
+    userStore.updateData(user.value);
+  }
 }
 </script>
 
